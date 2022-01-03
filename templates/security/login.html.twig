@@ -1,0 +1,65 @@
+{% extends 'security_layout.html.twig' %}
+
+{% block title %}SECURITE :: Connexion{% endblock %}
+
+{% block body %}
+    <div class="p-5">
+        <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">VISIO+ 2.0</h1>
+        </div>
+        <form method="post" class="user">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+            <div class="form-group">
+                <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control form-control-user" autocomplete="username" placeholder="Nom utilisateur..." required autofocus>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="inputPassword" class="form-control  form-control-user" autocomplete="current-password" required placeholder="Mot de passe">
+            </div>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+            {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+			See https://symfony.com/doc/current/security/remember_me.html
+
+			<div class="checkbox mb-3">
+				<label>
+					<input type="checkbox" name="_remember_me"> Remember me
+				</label>
+			</div>
+            #}
+            <div class="form-group">
+                <div class="custom-control custom-checkbox small">
+                    <input type="checkbox" class="custom-control-input" name="_remember_me">
+                    <label class="custom-control-label" for="customCheck">Se souvenir de moi</label>
+                </div>
+            </div>
+
+            <button  class="btn btn-primary btn-user btn-block" type="submit">
+                Connexion
+            </button>
+        </form>
+    </div>
+
+{% endblock %}
