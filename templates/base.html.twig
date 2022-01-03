@@ -110,6 +110,26 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Paramètres
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSecurity"
+                   aria-expanded="true" aria-controls="collapseSecurity">
+                    <i class="fas fa-fw fa-lock"></i>
+                    <span>Security</span>
+                </a>
+                <div id="collapseSecurity" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ absolute_url(path('admin_user_index')) }}">Utilisateur</a>
+                        <a class="collapse-item" href="">Monitoring</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
