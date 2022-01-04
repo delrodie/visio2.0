@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} Gestion des utilisateurs{% endblock %}
+{% block title %}{{ parent() }} Gestion des assurances{% endblock %}
 
 {% block body %}
-    <h1 class="h3 mb-2 text-gray-800">Gestion des utilisateurs</h1>
+    <h1 class="h3 mb-2 text-gray-800">Gestion des assurances</h1>
     <p class="my-4"></p>
     <div class="card shadow mb-4">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
                     {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             {% endfor %}
         {% endfor %}
@@ -21,26 +23,24 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>Username</th>
-                                <th>Roles</th>
-                                <th>Connexion</th>
-                                <th>Date</th>
+                                <th>Noms</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for user in users %}
+                            {% for assurance in assurances %}
                                 <tr>
                                     <td>{{ loop.index }}</td>
-                                    <td>
-                                        <a href="{{ path('admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
+                                    <td>{{ assurance.nom }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ absolute_url(path('assurance_edit', {'slug': assurance.slug})) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                     </td>
-                                    <td></td>
-                                    <td class="text-center">{{ user.loginCount }}</td>
-                                    <td class="text-center">{{ user.lastConnectedAt|date('Y-m-d H:i:s') }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -53,7 +53,9 @@
                     <h6 class="m-0 font-weight-bold text-primary">Enregistrement</h6>
                 </div>
                 <div class="card-body">
-                    {{ include('admin_user/_form.html.twig') }}
+                    {{ include('assurance/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+                    {{ include('assurance/_delete_form.html.twig') }}
                 </div>
             </div>
         </div>
@@ -68,7 +70,19 @@
     <script src="{{ absolute_url(asset('assets/vendor/datatables/datatables.min.js')) }}"></script>
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                "language": {
+                    "lengthMenu": "Affichage _MENU_ par page",
+                    "zeroRecords": "Aucun enregistrement",
+                    "info": "Affichage page _PAGE_ sur _PAGES_",
+                    "infoEmpty": "Aucun enregistrement disponible",
+                    "infoFiltered": "(filtered from _MAX_ total records)"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
         } );
     </script>
 {% endblock %}
