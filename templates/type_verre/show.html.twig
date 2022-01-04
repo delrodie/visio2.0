@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeVerre{% endblock %}
+
+{% block body %}
+    <h1>TypeVerre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type_verre.id }}</td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ type_verre.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ type_verre.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_verre_index') }}">back to list</a>
+
+    <a href="{{ path('type_verre_edit', {'id': type_verre.id}) }}">edit</a>
+
+    {{ include('type_verre/_delete_form.html.twig') }}
+{% endblock %}
