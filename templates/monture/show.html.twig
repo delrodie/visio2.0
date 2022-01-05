@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Monture{% endblock %}
+
+{% block body %}
+    <h1>Monture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ monture.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ monture.reference }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ monture.montant }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ monture.genre }}</td>
+            </tr>
+            <tr>
+                <th>Col</th>
+                <td>{{ monture.col }}</td>
+            </tr>
+            <tr>
+                <th>Taille</th>
+                <td>{{ monture.taille }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ monture.stock }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ monture.slug }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('monture_index') }}">back to list</a>
+
+    <a href="{{ path('monture_edit', {'id': monture.id}) }}">edit</a>
+
+    {{ include('monture/_delete_form.html.twig') }}
+{% endblock %}

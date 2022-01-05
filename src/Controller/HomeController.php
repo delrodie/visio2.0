@@ -17,4 +17,12 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+	
+	/**
+	 * @Route("/date", name="app_date")
+	 */
+	public function date(): Response
+	{
+		return new Response(date('Y-m-d H:i:s'));
+	}
 }

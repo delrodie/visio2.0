@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-6 mt-3">{{ form_row(form.marque) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.genre) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.reference) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.montant) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.col) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.taille) }}</div>
+        <div class="col-6 mt-3">{{ form_row(form.stock) }}</div>
+    </div>
+    {{ form_widget(form) }}
+    <div class="text-right mt-5">
+        <a href="{{ absolute_url(path('monture_index') )}}" class="btn btn-outline-secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+    </div>
+{{ form_end(form) }}
