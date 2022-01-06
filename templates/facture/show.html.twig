@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture{% endblock %}
+
+{% block body %}
+    <h1>Facture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ facture.id }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ facture.numero }}</td>
+            </tr>
+            <tr>
+                <th>MontantHt</th>
+                <td>{{ facture.montantHt }}</td>
+            </tr>
+            <tr>
+                <th>Remise</th>
+                <td>{{ facture.remise }}</td>
+            </tr>
+            <tr>
+                <th>Tva</th>
+                <td>{{ facture.tva }}</td>
+            </tr>
+            <tr>
+                <th>MontantTTC</th>
+                <td>{{ facture.montantTTC }}</td>
+            </tr>
+            <tr>
+                <th>Accompte</th>
+                <td>{{ facture.accompte }}</td>
+            </tr>
+            <tr>
+                <th>Rap</th>
+                <td>{{ facture.rap }}</td>
+            </tr>
+            <tr>
+                <th>PartAssurance</th>
+                <td>{{ facture.partAssurance }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ facture.date }}</td>
+            </tr>
+            <tr>
+                <th>Odcyl</th>
+                <td>{{ facture.odcyl }}</td>
+            </tr>
+            <tr>
+                <th>OdAxe</th>
+                <td>{{ facture.odAxe }}</td>
+            </tr>
+            <tr>
+                <th>OdAdd</th>
+                <td>{{ facture.odAdd }}</td>
+            </tr>
+            <tr>
+                <th>OdQte</th>
+                <td>{{ facture.odQte }}</td>
+            </tr>
+            <tr>
+                <th>OdMontant</th>
+                <td>{{ facture.odMontant }}</td>
+            </tr>
+            <tr>
+                <th>OdSph</th>
+                <td>{{ facture.odSph }}</td>
+            </tr>
+            <tr>
+                <th>OgCyl</th>
+                <td>{{ facture.ogCyl }}</td>
+            </tr>
+            <tr>
+                <th>OgAxe</th>
+                <td>{{ facture.ogAxe }}</td>
+            </tr>
+            <tr>
+                <th>OgAdd</th>
+                <td>{{ facture.ogAdd }}</td>
+            </tr>
+            <tr>
+                <th>OgQte</th>
+                <td>{{ facture.ogQte }}</td>
+            </tr>
+            <tr>
+                <th>OgMontant</th>
+                <td>{{ facture.ogMontant }}</td>
+            </tr>
+            <tr>
+                <th>OgSph</th>
+                <td>{{ facture.ogSph }}</td>
+            </tr>
+            <tr>
+                <th>PrixMonture</th>
+                <td>{{ facture.prixMonture }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ facture.statut ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ facture.createdAt ? facture.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ facture.updatedAt ? facture.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('facture_index') }}">back to list</a>
+
+    <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
+
+    {{ include('facture/_delete_form.html.twig') }}
+{% endblock %}
