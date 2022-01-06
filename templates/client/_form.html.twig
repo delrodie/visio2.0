@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+    <div class="row form-group">
+        <div class="col-4 mt-3">{{ form_row(form.nom) }}</div>
+        <div class="col-5 mt-3">{{ form_row(form.prenoms) }}</div>
+        <div class="col-3 mt-3">{{ form_row(form.sexe) }}</div>
+        <div class="col-4 mt-3">{{ form_row(form.adresse) }}</div>
+        <div class="col-4 mt-3">{{ form_row(form.cel) }}</div>
+        <div class="col-4 mt-3">{{ form_row(form.tel) }}</div>
+    </div>
+    {{ form_widget(form) }}
+    <div class="text-right mt-5 mb-3">
+        <a href="{{ absolute_url(path('client_index')) }}" class="btn btn-outline-secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+    </div>
+{{ form_end(form) }}

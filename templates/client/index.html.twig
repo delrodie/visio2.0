@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Liste des clients  {{ render(url('app_date')) }}{% endblock %}
+
+{% block body %}
+    <h1 class="h3 mb-2 text-gray-800">Gestion des clients</h1>
+    <p class="my-4"></p>
+    <div class="card shadow mb-4">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-header py-3">
+                    <div class="py-1">
+                        <a href="{{ absolute_url(path('client_new')) }}" class="btn btn-primary" style="float: right">
+                            <i class="fas fa-plus-circle"></i> Ajouter
+                        </a>
+                    </div>
+                    <h6 class="m-0 font-weight-bold text-primary">Liste</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr class="text-center">
+                                <th>#</th>
+                                <th>Matricules</th>
+                                <th>Noms</th>
+                                <th>Prenoms</th>
+                                <th>Sexes</th>
+                                <th>Adresses</th>
+                                <th>Cel / Tel </th>
+                                <th>Soldes</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for client in clients %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ client.matricule }}</td>
+                                    <td>{{ client.nom }}</td>
+                                    <td>{{ client.prenoms }}</td>
+                                    <td>{{ client.sexe }}</td>
+                                    <td>{{ client.adresse }}</td>
+                                    <td>{{ client.cel }} {{ client.tel ? - client.tel : '' }}</td>
+                                    <td class="text-right pr-3">{{ client.solde|number_format(0,'', ' ') }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ absolute_url(path('client_show', {'slug': client.slug})) }}">
+                                            <i class="fas fa-eye"></i>
+                                        </a> &nbsp;|&nbsp;
+                                        <a href="{{ absolute_url(path('client_edit', {'slug': client.slug})) }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/datatables/datatables.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/vendor/datatables/datatables.min.js')) }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "lengthMenu": "Affichage _MENU_ par page",
+                    "zeroRecords": "Aucun enregistrement",
+                    "infoEmpty": "Aucun enregistrement disponible",
+                    "infoFiltered": "(filtered from _MAX_ total records)"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        } );
+    </script>
+{% endblock %}
