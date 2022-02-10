@@ -1,54 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Client{% endblock %}
+{% block title %}{{ parent()}} Gestion des clients{% endblock %}
 
 {% block body %}
-    <h1>Client</h1>
+    <h1 class="h3 mb-2 text-gray-800">Gestion des clients</h1>
+    <p class="my-4"></p>
+    <div class="card shadow mb-4">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show m-3 p-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-header py-3">
+                    <div class="py-1">
+                        <a href="{{ absolute_url(path('client_index')) }}" class="btn btn-primary" style="float: right">
+                            <i class="fas fa-list"></i> Liste
+                        </a>
+                    </div>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ client.nom|upper }} {{ client.prenoms }}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row form-group">
+                        <div class="col-4 mt-3">
+                            <label for="">NOM</label>
+                            <input type="text" class="form-control" value="{{ client.nom }}" readonly>
+                        </div>
+                        <div class="col-5 mt-3">
+                            <label for="">PRENOMS</label>
+                            <input type="text" class="form-control" value="{{ client.prenoms }}" readonly>
+                        </div>
+                        <div class="col-3 mt-3">
+                            <label for="">SEXE</label>
+                            <input type="text" class="form-control" value="{{ client.sexe }}" readonly>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label for="">ADRESSE</label>
+                            <input type="text" class="form-control" value="{{ client.adresse }}" readonly>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label for="">CELLULAIRE</label>
+                            <input type="text" class="form-control" value="{{ client.cel }}" readonly>
+                        </div>
+                        <div class="col-4 mt-3">
+                            <label for="">TELEPHONE</label>
+                            <input type="text" class="form-control" value="{{ client.tel }}" readonly>
+                        </div>
+                    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ client.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ client.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenoms</th>
-                <td>{{ client.prenoms }}</td>
-            </tr>
-            <tr>
-                <th>Sexe</th>
-                <td>{{ client.sexe }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ client.adresse }}</td>
-            </tr>
-            <tr>
-                <th>Cel</th>
-                <td>{{ client.cel }}</td>
-            </tr>
-            <tr>
-                <th>Tel</th>
-                <td>{{ client.tel }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ client.slug }}</td>
-            </tr>
-            <tr>
-                <th>Solde</th>
-                <td>{{ client.solde }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('client_index') }}">back to list</a>
-
-    <a href="{{ path('client_edit', {'id': client.id}) }}">edit</a>
-
-    {{ include('client/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

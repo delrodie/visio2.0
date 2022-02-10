@@ -27,7 +27,7 @@ class MontureType extends AbstractType
 	            'label'=>'Montant *'
             ])
             ->add('genre', ChoiceType::class,[
-	            'attr' => ['class'=>'form-control'],
+	            'attr' => ['class'=>'form-control select2'],
 	            'choices'=>[
 		            '-- Selectionnez le genre --' => '',
 		            '' => '',
@@ -39,7 +39,8 @@ class MontureType extends AbstractType
 	            ],
 	            'multiple'=> false,
 	            'expanded'=>false,
-	            'label' => "Genre *"
+	            'label' => "Genre",
+	            'required' => false
             ])
             ->add('col', TextType::class,[
 				'attr'=>['class'=>'form-control', 'placeholder'=>"La couleur de la monture", 'autocomplete'=>"off"],
@@ -60,7 +61,7 @@ class MontureType extends AbstractType
             ])
             //->add('slug')
             ->add('marque', EntityType::class,[
-	            'attr' => ['class'=>"form-control"],
+	            'attr' => ['class'=>"form-control select2"],
 				'class' => Marque::class,
 	            'query_builder' => function(EntityRepository $entityRepository){
 					return $entityRepository->createQueryBuilder('m')
