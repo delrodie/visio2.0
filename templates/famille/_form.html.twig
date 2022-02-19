@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        <div class="col">{{ form_row(form.libelle) }}</div>
+    </div>
+    {{ form_widget(form) }}
+    <div class="text-right">
+        <a href="{{ absolute_url(path('famille_index') )}}" class="btn btn-outline-secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+    </div>
+{{ form_end(form) }}
