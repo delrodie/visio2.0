@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Facture;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
@@ -45,6 +46,7 @@ class FactureController extends AbstractController
         return $this->renderForm('facture/new.html.twig', [
             'facture' => $facture,
             'form' => $form,
+	        'client' => $entityManager ->getRepository(Client::class)->findOneBy(['slug'=>$slug])
         ]);
     }
 

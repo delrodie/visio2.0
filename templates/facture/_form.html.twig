@@ -1,4 +1,25 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="row form-group">
+                <div id="sandbox-container" class="col-md-6 mt-3 mb-1">
+                    {{ form_label(form.date) }}{{ form_widget(form.date) }}{{ form_errors(form.date) }}
+                </div>
+                <div class="col-md-6 mt-3">{{ form_row(form.assurance) }}</div>
+                <div class="col-md-12 mt-3 mb-3">{{ form_row(form.client) }}</div>
+                <div class="col-md-12 mt-3 ml-3 custom-control custom-checkbox">
+                    {{ form_widget(form.montureBool) }} {{ form_label(form.montureBool) }}
+                </div>
+                <div class="col-md-12 mt-3 ml-3 custom-control custom-checkbox">
+                    {{ form_widget(form.verreBool) }} {{ form_label(form.verreBool) }}
+                </div>
+            </div>
+            {{ form_widget(form) }}
+            <div class="text-right">
+                <a href="{{ absolute_url(path('client_index') )}}" class="btn btn-outline-secondary">Annuler</a>
+                <button class="btn btn-primary">{{ button_label|default('Suivant') }}</button>
+            </div>
+        </div>
+    </div>
+
 {{ form_end(form) }}

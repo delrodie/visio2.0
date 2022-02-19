@@ -10,7 +10,9 @@ use App\Entity\TypeVerre;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,7 +32,9 @@ class FactureType extends AbstractType
             //->add('accompte')
             //->add('rap')
             //->add('partAssurance')
-            ->add('date')
+            ->add('date', TextType::class,[
+				'attr'=>['class' => 'form-control', 'autocomplete'=>"off"]
+            ])
             //->add('odcyl')
             //->add('odAxe')
             //->add('odAdd')
@@ -45,10 +49,20 @@ class FactureType extends AbstractType
             //->add('ogSph')
             //->add('prixMonture')
             //->add('statut')
-            ->add('montureBool', ChoiceType::class)
-            ->add('verreBool',ChoiceType::class,[])
+            ->add('montureBool', CheckboxType::class,[
+				'attr'=> ['class'=>'custom-control-input'],
+	            'label' => "La facture comporte-t-elle une monture ?",
+	            'label_attr' =>["class" => 'custom-control-label', 'for' => "facture_montureBool"],
+	            'required' => false
+            ])
+            ->add('verreBool',CheckboxType::class,[
+	            'attr'=> ['class'=>'custom-control-input'],
+	            'label' => "La facture comporte-t-elle un verre ?",
+	            'label_attr' =>["class" => 'custom-control-label', 'for' => "facture_verreBool"],
+	            'required' => false
+            ])
             ->add('client', EntityType::class,[
-	            'attr' => ['class'=>"form-control"],
+	            'attr' => ['class'=>"form-control", 'readonly'=>true],
 				'class' => Client::class,
 	            'query_builder' => function(EntityRepository $entityRepository) use($slug){
 					return $entityRepository->createQueryBuilder('c')
@@ -59,10 +73,10 @@ class FactureType extends AbstractType
 	            'choice_label' => function($client){
 					return $client->getNom().' '.$client->getPrenoms();
 	            },
-	            'label' => "Client *"
+	            'label' => "Client *",
             ])
             ->add('assurance', EntityType::class,[
-	            'attr' => ['class'=>"form-control select"],
+	            'attr' => ['class'=>"form-control select2"],
 				'class' => Assurance::class,
 	            'query_builder' => function(EntityRepository $entityRepository){
 					return $entityRepository->createQueryBuilder('a')
@@ -70,8 +84,8 @@ class FactureType extends AbstractType
 	            },
 	            'choice_label' => 'nom',
 	            'label' => "Assurance ",
-	            'help' => "Facultatif",
-	            'help_attr' => ['style'=>"font-style: italic; color:red; font-size:.85rem;"],
+	            //'help' => "Facultatif",
+	            //'help_attr' => ['style'=>"font-style: italic; color:red; font-size:.85rem;"],
             ])
         ;
     }
