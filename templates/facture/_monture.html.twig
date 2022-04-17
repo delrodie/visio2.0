@@ -1,0 +1,22 @@
+{{ form_start(form) }}
+<div class="form-group">
+	<div class="row">
+		<div class="col-md-6">
+			<label for="">Client</label>
+			<input type="text" class="form-control" value="{{ facture.client.nom }} {{ facture.client.prenoms }}" readonly>
+		</div>
+		<div class="col-md-6">
+			<label for="">Facture N°</label>
+			<input type="text" class="form-control" value="{{ facture.numero }}" readonly>
+		</div>
+		<div class="col-md-6 mt-3">{{ form_row(form.monture) }}</div>
+		<div class="col-md-6 mt-3">{{ form_row(form.prixMonture) }}</div>
+	</div>
+</div>
+
+{{ form_widget(form) }}
+<div class="text-right mt-5">
+	<a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" class="btn btn-outline-secondary">&laquo; Précédent</a>
+	<button class="btn btn-primary" type="submit">Suivant &raquo;</button>
+</div>
+{{ form_end(form) }}

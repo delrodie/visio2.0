@@ -1,0 +1,70 @@
+<form action="#" method="post">
+    <div class="row">
+        <div class="col-md-6 mt-3">
+            <label for="">Nom & Prenoms</label>
+            <input type="text" class="form-control" value="{{ facture.client.nom }} {{ facture.client.prenoms }}" readonly>
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">N° Client</label>
+            <input type="text" class="form-control" value="{{ facture.client.matricule }}" readonly>
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Date</label>
+            <input type="text" class="form-control" value="{{ facture.date|date('d-m-Y') }}" readonly>
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Sexe</label>
+            <input type="text" class="form-control" value="{{ facture.client.sexe }}" readonly>
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Contact</label>
+            <input type="text" class="form-control" value="{{ facture.client.cel }}" readonly>
+        </div>
+        <div class="col-md-6 mt-3">
+            <label for="">Assurance</label>
+            <input type="text" class="form-control" value="{{ facture.assurance.nom }}" readonly>
+        </div>
+        <div class="col-md-6 mt-3">
+            <label for="">Monture</label>
+            <input type="text" class="form-control" value="{{ facture.monture.marque }} {{ facture.monture.reference }}" readonly>
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Montant</label>
+            <input type="text" class="form-control" value="{{ facture.prixMonture }}" readonly>
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Montant Total</label>
+            <input type="text" class="form-control" value="{{ facture.montantHt }}" readonly id="montantTotal">
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Reduction</label>
+            <input type="text" name="facture_remise" class="form-control" id="remise">
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Part assurance</label>
+            <input type="text" name="facture_assurance" class="form-control" id="assurance">
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Acompte</label>
+            <input type="text" name="facture_acompte" class="form-control" id="acompte">
+        </div>
+        <div class="col-md-3 mt-3">
+            <label for="">Reste à payer</label>
+            <input type="text" name="facture_resteAPayer" class="form-control" readonly id="resteAPayer">
+        </div>
+        <div class="col-md-8 offset-md-4 text-right" style="font-size: 0.9rem; font-style: italic; color: darkred">
+            <div id="errors"></div>
+        </div>
+
+        <div class="col-md-8 offset-md-2 mt-5">
+
+            <div class="text-right">
+                <input type="hidden" name="facture_id" value="{{ facture.id }}">
+                <a href="{{ absolute_url(path('client_index') )}}" class="btn btn-outline-secondary">Annuler</a>
+                <button class="btn btn-primary">{{ button_label|default('Valider') }}</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+

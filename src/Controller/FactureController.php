@@ -6,6 +6,7 @@ use App\Entity\Client;
 use App\Entity\Facture;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
+use App\Utilities\GestionFacture;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FactureController extends AbstractController
 {
+	private $_facture;
+	
+	public function __construct(GestionFacture $_facture)
+	{
+		$this->_facture = $_facture;
+	}
+	
     /**
      * @Route("/", name="facture_index", methods={"GET"})
      */
@@ -39,6 +47,12 @@ class FactureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($facture);
             $entityManager->flush();
+			
+	        $this->_facture->numero($facture);
+			
+			if ($facture->getMontureBool()){
+				return $this->redirectToRoute('facture_complement_monture',['factureId'=>$facture->getId()]);
+			}
 
             return $this->redirectToRoute('facture_index', [], Response::HTTP_SEE_OTHER);
         }

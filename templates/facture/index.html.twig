@@ -1,82 +1,99 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Facture index{% endblock %}
+{% block title %}{{ parent() }} Liste des factures  {{ render(url('app_date')) }}{% endblock %}
 
 {% block body %}
-    <h1>Facture index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>MontantHt</th>
-                <th>Remise</th>
-                <th>Tva</th>
-                <th>MontantTTC</th>
-                <th>Accompte</th>
-                <th>Rap</th>
-                <th>PartAssurance</th>
-                <th>Date</th>
-                <th>Odcyl</th>
-                <th>OdAxe</th>
-                <th>OdAdd</th>
-                <th>OdQte</th>
-                <th>OdMontant</th>
-                <th>OdSph</th>
-                <th>OgCyl</th>
-                <th>OgAxe</th>
-                <th>OgAdd</th>
-                <th>OgQte</th>
-                <th>OgMontant</th>
-                <th>OgSph</th>
-                <th>PrixMonture</th>
-                <th>Statut</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for facture in factures %}
-            <tr>
-                <td>{{ facture.id }}</td>
-                <td>{{ facture.numero }}</td>
-                <td>{{ facture.montantHt }}</td>
-                <td>{{ facture.remise }}</td>
-                <td>{{ facture.tva }}</td>
-                <td>{{ facture.montantTTC }}</td>
-                <td>{{ facture.accompte }}</td>
-                <td>{{ facture.rap }}</td>
-                <td>{{ facture.partAssurance }}</td>
-                <td>{{ facture.date }}</td>
-                <td>{{ facture.odcyl }}</td>
-                <td>{{ facture.odAxe }}</td>
-                <td>{{ facture.odAdd }}</td>
-                <td>{{ facture.odQte }}</td>
-                <td>{{ facture.odMontant }}</td>
-                <td>{{ facture.odSph }}</td>
-                <td>{{ facture.ogCyl }}</td>
-                <td>{{ facture.ogAxe }}</td>
-                <td>{{ facture.ogAdd }}</td>
-                <td>{{ facture.ogQte }}</td>
-                <td>{{ facture.ogMontant }}</td>
-                <td>{{ facture.ogSph }}</td>
-                <td>{{ facture.prixMonture }}</td>
-                <td>{{ facture.statut ? 'Yes' : 'No' }}</td>
-                <td>{{ facture.createdAt ? facture.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ facture.updatedAt ? facture.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('facture_show', {'id': facture.id}) }}">show</a>
-                    <a href="{{ path('facture_edit', {'id': facture.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="27">no records found</td>
-            </tr>
+    <h1 class="h3 mb-2 text-gray-800">Gestion des factures</h1>
+    <p class="my-4"></p>
+    <div class="card shadow mb-4">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
         {% endfor %}
-        </tbody>
-    </table>
-
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Liste</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr class="text-center">
+                                <th>#</th>
+                                <th>Dates</th>
+                                <th>Clients</th>
+                                <th>References</th>
+                                <th>Montures</th>
+                                <th>Montant</th>
+                                <th>Acompte</th>
+                                <th>RAP</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for facture in factures %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ facture.date }}</td>
+                                    <td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
+                                    <td>{{ facture.numero }}</td>
+                                    <td>
+                                        {% if facture.monture %}
+                                            {{ facture.monture.marque.nom }} {{ facture.monture.reference }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right pr-3">{{ facture.montantHt|number_format(0,'', ' ') }}</td>
+                                    <td class="text-right pr-3">{{ facture.accompte|number_format(0,'', ' ') }}</td>
+                                    <td class="text-right pr-3">{{ facture.rap|number_format(0,'', ' ') }}</td>
+                                    <td class="text-center">
+                                        <a href="#">
+                                            <i class="fas fa-eye"></i>
+                                        </a> &nbsp;|&nbsp;
+                                        <a href="#">
+                                            <i class="fas fa-edit"></i>
+                                        </a> |
+                                        <a href="#">
+                                            <i class="fas fa-file"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/datatables/datatables.min.css')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/vendor/datatables/datatables.min.js')) }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                "language": {
+                    "lengthMenu": "Affichage _MENU_ par page",
+                    "zeroRecords": "Aucun enregistrement",
+                    "infoEmpty": "Aucun enregistrement disponible",
+                    "infoFiltered": "(filtered from _MAX_ total records)"
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        } );
+    </script>
 {% endblock %}
