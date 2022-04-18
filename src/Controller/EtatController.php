@@ -17,9 +17,9 @@ class EtatController extends AbstractController
      */
     public function index(Facture $facture): Response
     {
-		dd($facture);
+		//dd($facture);
         return $this->render('etat/index.html.twig', [
-            'controller_name' => 'EtatController',
+            'facture' => $facture,
         ]);
     }
 }

@@ -1,20 +1,208 @@
-{% extends 'base.html.twig' %}
+{% extends 'etat_layout.html.twig' %}
 
-{% block title %}Hello EtatController!{% endblock %}
-
+{% block title %}Facture N°: {{ facture.numero }}{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.client{
+			border: solid 1px #000;
+            width: 100%;
+            padding: 20px 10px;
+		}
+		.client span{
+            font-weight: bold;
+		}
+		.facture-numero{
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+		}
+		.facture-numero span{
+			color: red;
+		}
+		.date{
+            font-size: 1.2rem;
+            text-align: center;
+		}
+		.correction{
+			border: solid 1px #000;
+            width: 100%;
+            padding: 0 10px;
+            margin-top: 20px;
+            margin-left: 10px;
+		}
+		.correction .libelle{
+            font-weight: bold;
+            text-align: center;
+            padding-top: 5px;
+		}
+		.correction .premiere{
+            padding: 20px 0 5px;
+            text-align: center;
+		}
+		.correction .deuxieme{
+            padding: 5px 0 20px;
+            text-align: center;
+        }
+		.designation{
+            margin-top: 50px;
+            margin-left: 10px;
+            width: 100%;
+			border: solid 1px #000;
+		}
+		.designation .libelle{
+            text-align: center;
+            font-weight: bold;
+            padding: 5px 0;
+		}
+		.designation .monture{
+            padding: 20px 0 5px 10px;
+		}
+		.designation .verre{
+            padding: 5px 0 20px 10px;
+		}
+		.totaux{
+            width: 100%;
+			margin-top: 5px;
+            margin-left: 10px;
+			border: solid 1px #000;
+		}
+		.totaux .libelle{
+            font-weight: bold;
+            text-align: center;
+		}
+		.totaux .libelle .col-3{
+			border-left: solid 1px #333;
+            border-bottom: solid 1px #333;
+		}
+		.totaux .valeur{
+            text-align: center;
+            padding: 3px 0;
+		}
+		.totaux .valeur .montant{
+			color: darkblue;
+		}
+		.rap{
+            padding: 10px 0;
+            font-weight: bold;
+        }
+		.rap .montant{
+            font-size: 1.3rem;
+			color: red;
+			border: solid 1px #333;
+		}
+		.signature{
+            margin-top: 100px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: underline;
+		}
+	</style>
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/delrodie/www/applications/optic/visio2/src/Controller/EtatController.php'|file_link(0) }}">src/Controller/EtatController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/delrodie/www/applications/optic/visio2/templates/etat/index.html.twig'|file_link(0) }}">templates/etat/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div id="main" >
+		<div class="row">
+			<div class="col-6 offset-6 client">
+				<div class="row">
+					<div class="col-3">Assurance</div>
+					<div class="col-9">: <span>{{ facture.assurance.nom }}</span></div>
+					<div class="col-3">Matricule</div>
+					<div class="col-9">: <span class="rouge">{{ facture.client.matricule }}</span></div>
+					<div class="col-3">Nom</div>
+					<div class="col-9">: <span>{{ facture.client.nom }} {{ facture.client.prenoms }}</span></div>
+					<div class="col-3">Adresse</div>
+					<div class="col-9">: <span>{{ facture.client.adresse }}</span></div>
+					<div class="col-3">Contact</div>
+					<div class="col-9">
+						: <span>{{ facture.client.cel }} {{ facture.client.tel ? '/'.facture.client.tel : '' }}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6 offset-6 facture-numero">Facture : N° <span>{{ facture.numero }}</span></div>
+			<div class="col-6 offset-6 date">{{ facture.date|date('d/m/Y') }}</div>
+		</div>
+		<div class="row">
+			<div class="correction">
+				<div class="row libelle">
+					<div class="col-6">Correction</div>
+					<div class="col-1">Sph</div>
+					<div class="col-1">Cyl</div>
+					<div class="col-1">Axe</div>
+					<div class="col-1">Add</div>
+				</div>
+				<div class="row premiere">
+					<div class="col-6 text-right pr-5">OG</div>
+					<div class="col-1">+2.55</div>
+					<div class="col-1">-3.00</div>
+					<div class="col-1">0.50</div>
+					<div class="col-1">PLAN</div>
+				</div>
+				<div class="row deuxieme">
+					<div class="col-6 text-right pr-5">OD</div>
+					<div class="col-1">+2.55</div>
+					<div class="col-1">-3.00</div>
+					<div class="col-1">0.50</div>
+					<div class="col-1">PLAN</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="designation">
+				<div class="row libelle">
+					<div class="col-5">Désignation</div>
+					<div class="col-2">Categorie</div>
+					<div class="col-1">Qte</div>
+					<div class="col-2">P.Unit</div>
+					<div class="col-2">Montant</div>
+				</div>
+				{% if facture.montureBool %}
+					<div class="row monture">
+						<div class="col-5 nom">{{ facture.monture.marque }} {{ facture.monture.reference }}</div>
+						<div class="col-2 text-center">Monture</div>
+						<div class="col-1 text-center">1</div>
+						<div class="col-2 text-center">{{ facture.monture.montant|number_format(0,'','.') }}</div>
+						<div class="col-2 text-center">{{ facture.monture.montant|number_format(0,'','.') }}</div>
+					</div>
+				{% endif %}
+				{% if facture.verreBool %}
+					<div class="row verre">
+						{% set montant = facture.ogMontant + facture.odMontant %}
+						<div class="col-5 nom">{{ facture.typeVerre }} </div>
+						<div class="col-2 text-center">Verre</div>
+						<div class="col-1 text-center">2</div>
+						<div class="col-2 text-center">{{ facture.ogMontant|number_format(0,'','.') }}</div>
+						<div class="col-2 text-center">{{ montant|number_format(0,'','.') }}</div>
+					</div>
+				{% else %}
+					<div class="verre"></div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="totaux">
+				<div class="row libelle">
+					<div class="col-3">Montant total</div>
+					<div class="col-3">Total réduction</div>
+					<div class="col-3">Part Assurance</div>
+					<div class="col-3">Acompte</div>
+				</div>
+				<div class="row valeur">
+					<div class="col-3 montant">{{ facture.montantHt|number_format(0,'','.') }}</div>
+					<div class="col-3">{{ facture.remise|number_format(0,'','.') }}</div>
+					<div class="col-3">{{ facture.partAssurance|number_format(0,'','.') }}</div>
+					<div class="col-3">{{ facture.accompte|number_format(0,'','.') }}</div>
+				</div>
+			</div>
+		</div>
+		<div class="row rap justify-content-center align-items-center">
+			<div class="col-9 text-right">Reste à payer</div>
+			<div class="col-3 text-center montant">{{ facture.rap|number_format(0,'','.') }}</div>
+		</div>
+		<div class="row">
+			<div class="col-5 offset-7 signature">La comptabilité</div>
+		</div>
+	</div>
 {% endblock %}

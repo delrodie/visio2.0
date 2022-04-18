@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Visio+ 2.0 :{% endblock %}</title>
+        <link rel="icon" href="{{ absolute_url(asset('assets/img/favico.ico')) }}">
+        {% block stylesheets %}
+            <link href="{{ absolute_url(asset('assets/vendor/fontawesome-free/css/all.min.css'))}}" rel="stylesheet" type="text/css">
+            <link
+                href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+                rel="stylesheet">
+
+            <link href="{{ absolute_url(asset('assets/css/sb-admin-2.min.css'))}}" rel="stylesheet">
+        {% endblock %}
+        <style>
+            body{
+                color: #000;
+                margin: 0;
+                padding: 0;
+            }
+            .wrapper {
+                font-family: "Helvetica Neue", Arial, sans-serif;
+                background: #ccc;
+                padding: 0;
+                margin: 0;
+            }
+
+            .container {
+                width: 210mm;
+                height: 297mm;
+                background: #fff;
+            }
+            .invoice {
+                background: #fff;
+                width: 210mm;
+                height: 297mm;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            .btn-facture{
+                position: fixed;
+                width: 225px;
+                height: 50px;
+                bottom: 115px;
+                right: 60px;
+                background: darkblue;
+                color: white;
+                text-align: center;
+                box-shadow: 2px 2px 3px #999;
+            }
+            .btn-facture:hover{
+                text-decoration: none;
+                color: white;
+                background: darkgreen;
+            }
+            .my-float{
+                margin-top: 13px;
+            }
+            .informations div{
+                font-size: .9rem;
+                margin: 0;
+                padding: 0;
+                line-height: 1.2;
+            }
+            @page{
+                size: A4;
+                margin: 11mm;
+            }
+            @media  print {
+                #header{
+                    display: table-header-group;
+                }
+                #main{
+                    display: table-row-group;
+                }
+                #footer{
+                    display: table-footer-group;
+                }
+                .no-print,
+                .no-print *{
+                    display: none !important;
+                }
+                .container{
+                    width: 260mm;
+                    height: 297mm;
+                    background: #fff;
+                    font-family: Arial, 'sans-serif';
+                    padding: 0;
+                    margin: 0;
+                }
+                .invoice{
+                    padding: 0;
+                    margin: 0;
+                    width: 260mm;
+                    height: 350mm;
+                }
+                .logo{
+                    -webkit-print-color-adjust: exact;
+                }
+                .informations div{
+                    margin: 0;
+                    padding: 0;
+                    font-size: .9rem;
+                }
+                .client{
+                    width: 100%;
+                }
+                .facture-numero{
+                    font-size: 1.7rem;
+                }
+                .date{
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                <div class="invoice">
+                    <div id="header">
+                        <div class="row">
+                            <div class="col-12">
+                                <img src="{{ asset('assets/img/logo.png') }}" alt="" class="img-flui logo" width="200">
+                            </div>
+                            <div class="col-6 informations">
+                                <div>Abidjan, Treichville avenue 2& rue 38B, face Eglise Notre Dame</div>
+                                <div>05 BP 3308 Abidjan 05</div>
+                                <div>+225 21 24 48 98</div>
+                                <div>+225 01 43 00 00 00</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+            <a href="#" class="btn-facture no-print" id="facture" onclick="print()">
+                <h5 class="my-float">Imprimer la facture</h5>
+            </a>
+        </div>
+
+        {% block javascripts %}
+            <script src="{{ absolute_url(asset('assets/vendor/jquery/jquery.min.js'))}}"></script>
+            <script src="{{ absolute_url(asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js'))}}"></script>
+            <script src="{{ absolute_url(asset('assets/vendor/jquery-easing/jquery.easing.min.js'))}}"></script>
+            <script src="{{ absolute_url(asset('assets/js/sb-admin-2.min.js'))}}"></script>
+        {% endblock %}
+    </body>
+</html>
