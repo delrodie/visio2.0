@@ -120,17 +120,7 @@
             <div class="container">
                 <div class="invoice">
                     <div id="header">
-                        <div class="row">
-                            <div class="col-12">
-                                <img src="{{ asset('assets/img/logo.png') }}" alt="" class="img-flui logo" width="200">
-                            </div>
-                            <div class="col-6 informations">
-                                <div>Abidjan, Treichville avenue 2& rue 38B, face Eglise Notre Dame</div>
-                                <div>05 BP 3308 Abidjan 05</div>
-                                <div>+225 21 24 48 98</div>
-                                <div>+225 01 43 00 00 00</div>
-                            </div>
-                        </div>
+                        {{ render(url('etat_facture_entreprise'))}}
                     </div>
                     {% block body %}{% endblock %}
                 </div>

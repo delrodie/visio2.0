@@ -1,0 +1,11 @@
+<div class="row">
+	<div class="col-12">
+		<img src="{{ asset(entreprise.media ? 'upload/'~ entreprise.media : 'assets/img/logo.png') }}" alt="{{ entreprise.nom }}" class="img-flui logo" width="200">
+	</div>
+	<div class="col-6 informations">
+		<div>{{ entreprise.localisation}}</div>
+		<div>{{ entreprise.adresse }}</div>
+		<div>{{ entreprise.tel}}</div>
+		<div>{{  entreprise.cel }}</div>
+	</div>
+</div>
