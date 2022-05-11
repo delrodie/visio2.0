@@ -80,6 +80,11 @@
 				$facture->setAccompte($acompte);
 				$facture->setRap($rap);
 				
+				// Mise a jour du solde du client
+				$client = $facture->getClient();
+				$solde = $client->getSolde() + (int) $rap;
+				$client->setSolde($solde);
+				
 				$this->em->flush();
 				
 				return $this->redirectToRoute('etat_facture', ['id' => $facture->getId()]);

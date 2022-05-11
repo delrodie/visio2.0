@@ -79,18 +79,20 @@ class FactureController extends AbstractController
      */
     public function edit(Request $request, Facture $facture, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(FactureType::class, $facture);
+        $form = $this->createForm(FactureType::class, $facture, ['client' => $facture->getClient()->getSlug()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('facture_index', [], Response::HTTP_SEE_OTHER);
+			
+			$this->addFlash('danger', 'Vous ne pouvez pas modifier cette facture. Nous vous invitons à la supprimer puis la reprendre');
+            
+            return $this->redirectToRoute('facture_edit', ["id"=>$facture->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('facture/edit.html.twig', [
             'facture' => $facture,
             'form' => $form,
+	        'client' => $entityManager->getRepository(Client::class)->findOneBy(['id' => $facture->getClient()->getId()]),
         ]);
     }
 
@@ -100,6 +102,17 @@ class FactureController extends AbstractController
     public function delete(Request $request, Facture $facture, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$facture->getId(), $request->request->get('_token'))) {
+			$monture = $facture->getMonture();
+			if ($facture->getMontureBool() && $monture){
+				$monture->setStock($monture->getStock()+1);
+			}
+			//dd($facture);
+	        // Mise a jour du solde du client
+	        $client = $facture->getClient();
+	        $solde = $client->getSolde() - $facture->getRap();
+			if(0 > $solde) $client->setSolde(0);
+	        else $client->setSolde($solde);
+			
             $entityManager->remove($facture);
             $entityManager->flush();
         }

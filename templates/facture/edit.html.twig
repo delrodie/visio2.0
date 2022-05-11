@@ -1,13 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Facture{% endblock %}
+{% block title %}{{ parent()}} Gestion des factures{% endblock %}
 
 {% block body %}
-    <h1>Edit Facture</h1>
+    <h1 class="h3 mb-2 text-gray-800">Gestion des factures</h1>
+    <p class="my-4"></p>
+    <div class="card shadow mb-4">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show m-3 p-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-header py-3">
+                    <div class="py-1">
+                        <a href="{{ absolute_url(path('facture_index')) }}" class="btn btn-primary" style="float: right">
+                            <i class="fas fa-list"></i> Liste
+                        </a>
+                    </div>
+                    <h6 class="m-0 font-weight-bold text-primary">Facturation du client {{ client.nom|upper }} {{ client.prenoms|upper }}</h6>
+                </div>
+                <div class="card-body">
+                    {{ include('facture/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    {{ include('facture/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('facture_index') }}">back to list</a>
-
-    {{ include('facture/_delete_form.html.twig') }}
+                    {{ include('facture/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/select2/css/select2.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/datepicker/css/bootstrap-datepicker.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('fr')) }}">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/vendor/select2/js/select2.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('assets/vendor/datepicker/js/bootstrap-datepicker.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('assets/vendor/datepicker/locales/bootstrap-datepicker.fr.min.js')) }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#sandbox-container input').datepicker({
+                language: "fr",
+                autoclose: true,
+                todayHighlight: true,
+                format: 'yyyy-mm-dd'
+            });
+        });
+        $(document).ready(function () {
+            $('.select2').select2();
+        })
+    </script>
 {% endblock %}

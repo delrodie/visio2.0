@@ -56,10 +56,10 @@
                                         <a href="#">
                                             <i class="fas fa-eye"></i>
                                         </a> &nbsp;|&nbsp;
-                                        <a href="#">
+                                        <a href="{{ path('facture_edit', {'id': facture.id}) }}">
                                             <i class="fas fa-edit"></i>
                                         </a> |
-                                        <a href="#">
+                                        <a href="{{ path('etat_facture', {'id': facture.id}) }}">
                                             <i class="fas fa-file"></i>
                                         </a>
                                     </td>
