@@ -18,6 +18,60 @@ class FactureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Facture::class);
     }
+	
+	/**
+	 * Liste des factures selon la periode
+	 *
+	 * @param $debut
+	 * @param $fin
+	 * @return float|int|mixed|string
+	 */
+	public function findByPeriode($debut,$fin)
+	{
+		return $this->createQueryBuilder('f')
+			->addSelect('c')
+			->addSelect('m')
+			->leftJoin('f.client', 'c')
+			->leftJoin('f.monture', 'm')
+			->where('f.date BETWEEN :debut AND :fin')
+			->setParameters([
+				'debut' => $debut,
+				'fin' => $fin
+			])
+			->getQuery()->getResult();
+	}
+	
+	/**
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 * @throws \Doctrine\ORM\NoResultException
+	 */
+	public function getMontantHTByPeriode($debut, $fin)
+	{
+		return $this->createQueryBuilder('f')
+			->select('SUM(f.montantHt)')
+			->where('f.date BETWEEN :debut AND :fin')
+			->setParameters([
+				'debut' => $debut,
+				'fin' => $fin
+			])
+			->getQuery()->getSingleScalarResult();
+	}
+	
+	/**
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 * @throws \Doctrine\ORM\NoResultException
+	 */
+	public function getRemiseByPeriode($debut, $fin)
+	{
+		return $this->createQueryBuilder('f')
+			->select('SUM(f.remise)')
+			->where('f.date BETWEEN :debut AND :fin')
+			->setParameters([
+				'debut' => $debut,
+				'fin' => $fin
+			])
+			->getQuery()->getSingleScalarResult();
+	}
 
     // /**
     //  * @return Facture[] Returns an array of Facture objects

@@ -18,6 +18,17 @@ class MontureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Monture::class);
     }
+	
+	/**
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 * @throws \Doctrine\ORM\NoResultException
+	 */
+	public function getStock()
+	{
+		return $this->createQueryBuilder('m')
+			->select('SUM(m.stock)')
+			->getQuery()->getSingleScalarResult();
+	}
 
     // /**
     //  * @return Monture[] Returns an array of Monture objects
