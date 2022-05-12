@@ -5,6 +5,7 @@
 	use App\Entity\Facture;
 	use App\Entity\Monture;
 	use App\Form\FactureMontureType;
+	use App\Form\FactureVerreType;
 	use App\Repository\FactureRepository;
 	use Doctrine\ORM\EntityManagerInterface;
 	use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,7 +52,7 @@
 				$this->em->flush();
 				
 				if ($facture->getVerreBool()){
-					return $this->redirectToRoute('etat_facture',['id'=>$facture->getId()]);
+					return $this->redirectToRoute('facture_complement_verre',['factureId'=>$facture->getId()]);
 				}
 				
 				return $this->redirectToRoute('facture_complement_finalisation',['id'=>$facture->getId()]);
@@ -65,7 +66,33 @@
 		}
 		
 		/**
-		 * @Route("/finalisation/{id}", name="facture_complement_finalisation", methods={"GET","POST"})
+		 * @Route("/{factureId}/verre", name="facture_complement_verre", methods={"GET","POST"})
+		 */
+		public function verre(Request $request, $factureId): Response
+		{
+			$facture = $this->factureRepository->findOneBy(['id'=>$factureId]);
+			$form = $this->createForm(FactureVerreType::class, $facture);
+			$form->handleRequest($request);
+			
+			if ($form->isSubmitted() && $form->isValid()){
+				$montant_verre = (int) $facture->getOdMontant() + (int) $facture->getOgMontant();
+				$montant_total = (int) $facture->getMontantHt() + $montant_verre;
+				
+				$facture->setMontantHt($montant_total);
+				
+				$this->em->flush();
+				
+				return $this->redirectToRoute('facture_complement_finalisation',['id' => $facture->getId()]);
+			}
+			
+			return $this->renderForm('facture/verre.html.twig',[
+				'facture' => $facture,
+				'form' => $form
+			]);
+		}
+		
+		/**
+		 * @Route("/finalisation/{id}/d", name="facture_complement_finalisation", methods={"GET","POST"})
 		 */
 		public function finalisation(Request $request, Facture $facture): Response
 		{
@@ -95,7 +122,7 @@
 		}
 		
 		/**
-		 * @Route("/ajax/monture/de", name="facture_completement_ajax", methods={"GET"})
+		 * @Route("/ajax/monture/de/fr", name="facture_completement_ajax", methods={"GET"})
 		 */
 		public function ajax(Request $request)
 		{

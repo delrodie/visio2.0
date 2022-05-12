@@ -124,31 +124,33 @@
 			<div class="col-6 offset-6 facture-numero">Facture : N° <span>{{ facture.numero }}</span></div>
 			<div class="col-6 offset-6 date">{{ facture.date|date('d/m/Y') }}</div>
 		</div>
-		<div class="row">
-			<div class="correction">
-				<div class="row libelle">
-					<div class="col-6">Correction</div>
-					<div class="col-1">Sph</div>
-					<div class="col-1">Cyl</div>
-					<div class="col-1">Axe</div>
-					<div class="col-1">Add</div>
-				</div>
-				<div class="row premiere">
-					<div class="col-6 text-right pr-5">OG</div>
-					<div class="col-1">+2.55</div>
-					<div class="col-1">-3.00</div>
-					<div class="col-1">0.50</div>
-					<div class="col-1">PLAN</div>
-				</div>
-				<div class="row deuxieme">
-					<div class="col-6 text-right pr-5">OD</div>
-					<div class="col-1">+2.55</div>
-					<div class="col-1">-3.00</div>
-					<div class="col-1">0.50</div>
-					<div class="col-1">PLAN</div>
+		{% if facture.verreBool %}
+			<div class="row">
+				<div class="correction">
+					<div class="row libelle">
+						<div class="col-6">Correction</div>
+						<div class="col-1">Sph</div>
+						<div class="col-1">Cyl</div>
+						<div class="col-1">Axe</div>
+						<div class="col-1">Add</div>
+					</div>
+					<div class="row premiere">
+						<div class="col-6 text-right pr-5">OD</div>
+						<div class="col-1">{{ facture.odSph}}</div>
+						<div class="col-1">{{ facture.odcyl }}</div>
+						<div class="col-1">{{ facture.odAxe }}</div>
+						<div class="col-1">{{ facture.odAdd}}</div>
+					</div>
+					<div class="row deuxieme">
+						<div class="col-6 text-right pr-5">OG</div>
+						<div class="col-1">{{ facture.ogSph}}</div>
+						<div class="col-1">{{ facture.ogCyl }}</div>
+						<div class="col-1">{{ facture.ogAxe }}</div>
+						<div class="col-1">{{ facture.ogAdd }}</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		{% endif %}
 		<div class="row">
 			<div class="designation">
 				<div class="row libelle">
@@ -170,7 +172,7 @@
 				{% if facture.verreBool %}
 					<div class="row verre">
 						{% set montant = facture.ogMontant + facture.odMontant %}
-						<div class="col-5 nom">{{ facture.typeVerre }} </div>
+						<div class="col-5 nom">{{ facture.typeVerre.libelle }} </div>
 						<div class="col-2 text-center">Verre</div>
 						<div class="col-1 text-center">2</div>
 						<div class="col-2 text-center">{{ facture.ogMontant|number_format(0,'','.') }}</div>

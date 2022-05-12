@@ -1,0 +1,38 @@
+{{ form_start(form) }}
+<div class="form-group">
+	<div class="row">
+		<div class="col-md-6">
+			<label for="">Client</label>
+			<input type="text" class="form-control" value="{{ facture.client.nom }} {{ facture.client.prenoms }}" readonly>
+		</div>
+		<div class="col-md-6">
+			<label for="">Facture N°</label>
+			<input type="text" class="form-control" value="{{ facture.numero }}" readonly>
+		</div>
+		<div class="col-md-6 mt-3">{{ form_row(form.typeVerre)}}</div>
+		<div class="col-md-6 mt-3"></div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-2">{{ form_row(form.odcyl)}}</div>
+		<div class="col-md-2">{{ form_row(form.odSph)}}</div>
+		<div class="col-md-2">{{ form_row(form.odAxe)}}</div>
+		<div class="col-md-2">{{ form_row(form.odAdd)}}</div>
+		<div class="col-md-2">{{ form_row(form.odQte)}}</div>
+		<div class="col-md-2">{{ form_row(form.odMontant)}}</div>
+	</div>
+	<div class="row mt-3">
+		<div class="col-md-2">{{ form_row(form.ogCyl)}}</div>
+		<div class="col-md-2">{{ form_row(form.ogSph)}}</div>
+		<div class="col-md-2">{{ form_row(form.ogAxe)}}</div>
+		<div class="col-md-2">{{ form_row(form.ogAdd)}}</div>
+		<div class="col-md-2">{{ form_row(form.ogQte)}}</div>
+		<div class="col-md-2">{{ form_row(form.ogMontant)}}</div>
+	</div>
+</div>
+
+{{ form_widget(form) }}
+<div class="text-right mt-5">
+	<a href="{{ absolute_url(path('facture_edit', {'id': facture.id})) }}" class="btn btn-outline-secondary">&laquo; Précédent</a>
+	<button class="btn btn-primary" type="submit">Suivant &raquo;</button>
+</div>
+{{ form_end(form) }}

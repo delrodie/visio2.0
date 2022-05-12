@@ -24,14 +24,75 @@
             <label for="">Assurance</label>
             <input type="text" class="form-control" value="{{ facture.assurance.nom }}" readonly>
         </div>
-        <div class="col-md-6 mt-3">
-            <label for="">Monture</label>
-            <input type="text" class="form-control" value="{{ facture.monture.marque }} {{ facture.monture.reference }}" readonly>
-        </div>
-        <div class="col-md-3 mt-3">
-            <label for="">Montant</label>
-            <input type="text" class="form-control" value="{{ facture.prixMonture }}" readonly>
-        </div>
+        {% if facture.monture %}
+            <div class="col-md-6 mt-3">
+                <label for="">Monture</label>
+                <input type="text" class="form-control" value="{{ facture.monture.marque }} {{ facture.monture.reference }}" readonly>
+            </div>
+            <div class="col-md-3 mt-3">
+                <label for="">Montant</label>
+                <input type="text" class="form-control" value="{{ facture.prixMonture }}" readonly>
+            </div>
+        {% endif %}
+        {% if facture.typeVerre %}
+            <div class="col-md-2 mt-3">
+                <label for="">OD Cylindre</label>
+                <input type="text" class="form-control" value="{{ facture.odcyl}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OD Sphère</label>
+                <input type="text" class="form-control" value="{{ facture.odSph}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OD Axe</label>
+                <input type="text" class="form-control" value="{{ facture.odAxe}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OD Add</label>
+                <input type="text" class="form-control" value="{{ facture.odAdd}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OD Quantité</label>
+                <input type="text" class="form-control" value="{{ facture.odQte}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OD Montant</label>
+                <input type="text" class="form-control" value="{{ facture.odMontant}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OG Cylindre</label>
+                <input type="text" class="form-control" value="{{ facture.ogCyl}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OG Sphère</label>
+                <input type="text" class="form-control" value="{{ facture.ogSph}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OG Axe</label>
+                <input type="text" class="form-control" value="{{ facture.ogAxe}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OG Add</label>
+                <input type="text" class="form-control" value="{{ facture.ogAdd}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OG Quantite</label>
+                <input type="text" class="form-control" value="{{ facture.ogQte}}" readonly>
+            </div>
+            <div class="col-md-2 mt-3">
+                <label for="">OG Montant</label>
+                <input type="text" class="form-control" value="{{ facture.ogMontant}}" readonly>
+            </div>
+            <div class="col-md-6 mt-3">
+                <label for="">Type de verre</label>
+                <input type="text" class="form-control" value="{{ facture.typeVerre.libelle }}" readonly>
+            </div>
+            <div class="col-md-3 mt-3">
+                {% set total_verre = facture.ogMontant + facture.odMontant %}
+                <label for="">Montant Verre</label>
+                <input type="text" class="form-control" value="{{ total_verre}}" readonly>
+            </div>
+        {% endif %}
         <div class="col-md-3 mt-3">
             <label for="">Montant Total</label>
             <input type="text" class="form-control" value="{{ facture.montantHt }}" readonly id="montantTotal">

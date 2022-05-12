@@ -53,6 +53,10 @@ class FactureController extends AbstractController
 			if ($facture->getMontureBool()){
 				return $this->redirectToRoute('facture_complement_monture',['factureId'=>$facture->getId()]);
 			}
+			
+			if ($facture->getVerreBool()){
+				return $this->redirectToRoute('facture_complement_verre', ['factureId' => $facture->getId()]);
+			}
 
             return $this->redirectToRoute('facture_index', [], Response::HTTP_SEE_OTHER);
         }
