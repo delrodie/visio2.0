@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} Liste des factures  {{ render(url('app_date')) }}{% endblock %}
+{% block title %}{{ parent() }} Liste des versements  {{ render(url('app_date')) }}{% endblock %}
 
 {% block body %}
-    <h1 class="h3 mb-2 text-gray-800">Gestion des factures</h1>
+    <h1 class="h3 mb-2 text-gray-800">Gestion des versements</h1>
     <p class="my-4"></p>
     <div class="card shadow mb-4">
         {% for label, messages in app.flashes %}
@@ -30,39 +30,20 @@
                                 <th>Dates</th>
                                 <th>Clients</th>
                                 <th>References</th>
-                                <th>Montures</th>
                                 <th>Montant</th>
-                                <th>Acompte</th>
-                                <th>RAP</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for facture in factures %}
+                            {% for versement in versements %}
                                 <tr>
                                     <td>{{ loop.index }}</td>
-                                    <td>{{ facture.date }}</td>
-                                    <td>{{ facture.client.nom }} {{ facture.client.prenoms }}</td>
-                                    <td>{{ facture.numero }}</td>
-                                    <td>
-                                        {% if facture.monture %}
-                                            {{ facture.monture.marque.nom }} {{ facture.monture.reference }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="text-right pr-3">{{ facture.montantHt|number_format(0,'', ' ') }}</td>
-                                    <td class="text-right pr-3">{{ facture.accompte|number_format(0,'', ' ') }}</td>
-                                    <td class="text-right pr-3">{{ facture.rap|number_format(0,'', ' ') }}</td>
+                                    <td>{{ versement.date }}</td>
+                                    <td>{{ versement.facture.client.nom }} {{ versement.facture.client.prenoms }}</td>
+                                    <td class="text-center">{{ versement.reference }}</td>
+                                    <td class="text-right pr-3">{{ versement.acompte|number_format(0,'', ' ') }}</td>
                                     <td class="text-center">
-                                        {% if facture.rap %}
-                                            <a href="{{ path('app_versement_new', {'factureId': facture.id}) }}" title="Versement">
-                                                <i class="fas fa-money-bill"></i>
-                                            </a> &nbsp;|&nbsp;
-                                        {% endif %}
-
-                                        <a href="{{ path('facture_edit', {'id': facture.id}) }}" title="Modifier">
-                                            <i class="fas fa-edit"></i>
-                                        </a> |
-                                        <a href="{{ path('etat_facture', {'id': facture.id}) }}" title="Impimer">
+                                        <a href="#" title="Impimer">
                                             <i class="fas fa-print"></i>
                                         </a>
                                     </td>

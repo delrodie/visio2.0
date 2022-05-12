@@ -7,6 +7,7 @@
 	use App\Form\FactureMontureType;
 	use App\Form\FactureVerreType;
 	use App\Repository\FactureRepository;
+	use App\Utilities\GestionFacture;
 	use Doctrine\ORM\EntityManagerInterface;
 	use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 	use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +25,13 @@
 	{
 		private $factureRepository;
 		private $em;
+		private $gestionFacture;
 		
-		public function __construct(FactureRepository $factureRepository, EntityManagerInterface $em)
+		public function __construct(FactureRepository $factureRepository, EntityManagerInterface $em, GestionFacture $gestionFacture)
 		{
 			$this->factureRepository = $factureRepository;
 			$this->em = $em;
+			$this->gestionFacture = $gestionFacture;
 		}
 		
 		/**
@@ -113,6 +116,8 @@
 				$client->setSolde($solde);
 				
 				$this->em->flush();
+				
+				$this->gestionFacture->reference_versement($facture);
 				
 				return $this->redirectToRoute('etat_facture', ['id' => $facture->getId()]);
 			}

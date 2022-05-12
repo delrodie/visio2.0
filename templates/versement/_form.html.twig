@@ -1,0 +1,30 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-6">
+            <label for="">Client</label>
+            <input type="text" class="form-control" value="{{ facture.client.nom }} {{ facture.client.prenoms}}" readonly>
+        </div>
+        <div class="col-md-3">
+            <label for="">Numéro Facture</label>
+            <input type="text" class="form-control" value="{{ facture.numero}}" readonly style="font-weight:bold;">
+        </div>
+        <div class="col-md-3">
+            <label for="">Facture date</label>
+            <input type="text" class="form-control" value="{{ facture.date|date("d-m-Y")}}" readonly>
+        </div>
+        <div class="col-md-4 mt-3">
+            <label for="">Montant</label>
+            <input type="text" id="montantVersment" class="form-control" value="{{ facture.rap}}" readonly>
+        </div>
+        <div id="sandbox-container" class="col-md-4 mt-3 mb-1">
+            {{ form_label(form.date) }}{{ form_widget(form.date) }}{{ form_errors(form.date) }}
+        </div>
+        <div class="col-md-4 mt-3">{{ form_row(form.acompte)}}</div>
+    </div>
+    {{ form_widget(form) }}
+    <div class="text-right mt-5">
+        <a href="{{ path('facture_index') }}" class="btn btn-outline-primary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+
+{{ form_end(form) }}
