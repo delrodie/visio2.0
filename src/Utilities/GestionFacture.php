@@ -45,7 +45,7 @@
 		 * @param $facture
 		 * @return bool|string
 		 */
-		public function reference_versement($facture = null): bool|string
+		public function reference_versement($facture = null)
 		{
 			$versement = $this->versementRepository->findOneBy([],['id'=>"DESC"]);
 			if (!$versement) $ref = 1;
